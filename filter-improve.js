@@ -11,6 +11,12 @@ document.addEventListener('tStoreRendered', () => {
   Object.keys(filtersWithCheckbox).forEach((filter) => {
     const availableValues = filtersWithCheckbox[filter];
     const filterOptions = document.querySelector(`[name="${filter}"]`).parentNode.querySelectorAll(`[data-filter-value]`);
+
+    const chosenFilters = [
+      ...document.querySelector('.t-store__filter__chosen-wrapper').querySelectorAll('[data-option-name]'),
+    ].map((el) => el.dataset.optionName);
+    if (chosenFilters.includes(filter)) return;
+
     filterOptions.forEach((option) => {
       if (availableValues.includes(option.dataset.filterValue)) {
         option.parentNode.style.display = '';
@@ -32,3 +38,5 @@ document.addEventListener('tStoreRendered', () => {
     });
   });
 });
+
+//$('.t-store').siblings('script').html().split('\n')[7]
