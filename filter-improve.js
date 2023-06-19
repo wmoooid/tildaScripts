@@ -15,6 +15,7 @@ document.addEventListener('tStoreRendered', () => {
     const chosenFilters = [
       ...document.querySelector('.t-store__filter__chosen-wrapper').querySelectorAll('[data-option-name]'),
     ].map((el) => el.dataset.optionName);
+
     if (chosenFilters.includes(filter)) return;
 
     filterOptions.forEach((option) => {
