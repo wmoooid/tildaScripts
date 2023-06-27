@@ -48,6 +48,13 @@
     background-color: rgba(255, 255, 255, 0.1) !important;
     border: 1px solid rgba(255, 255, 255, 0.5) !important;
   }
+</style>
+
+<style>
+  .t396__artboard,
+  .main-button .tn-atom {
+    transition: background-color 400ms ease-out;
+  }
 
   [class*='slide-'] {
     transition: transform 400ms ease-out, opacity 400ms ease-out;
@@ -55,28 +62,34 @@
 
   [class*='slide-heading'] {
     opacity: 0;
-    transform: translateX(-300px) rotateZ(-10deg);
+    transform: translateX(-200px) rotateZ(-5deg);
     transform-origin: left top;
   }
 
   [class*='slide-sub'] {
     opacity: 0;
-    transform: translateX(-200px) rotateZ(-5deg);
+    transform: translateX(-100px) rotateZ(-3deg);
     transform-origin: left top;
   }
 
   [class*='slide-image'] {
     opacity: 0;
-    transform: translateX(300px) rotateZ(-25deg);
+    transform: translateX(200px) rotateZ(-10deg);
     transform-origin: right bottom;
+  }
+
+  [class*='slide-bg'] {
+    opacity: 0;
+    /* transition: opacity 3000ms ease-out; */
   }
 
   [class*='slide-heading'].active,
   [class*='slide-sub'].active,
-  [class*='slide-image'].active {
+  [class*='slide-image'].active,
+  [class*='slide-bg'].active {
     opacity: 1;
     transform: none;
-    transition: transform 850ms cubic-bezier(0.45, 1.45, 0.8, 1), opacity 450ms ease-out;
+    transition: transform 700ms cubic-bezier(0.45, 1.45, 0.8, 1), opacity 400ms ease-out;
   }
 </style>
 
@@ -85,29 +98,37 @@
     let count = 1;
     const slideTimeout = 5000;
     const slidesNumber = $('[class*=slide-heading-]').length;
+    const colors = [, { bg: '#B2B059', button: '#585F34' }, { bg: '#C9582A', button: '#E6AE32' }];
 
     setTimeout(() => {
       $('[class*=slide-heading-1]').addClass('active');
       $('[class*=slide-sub-1]').addClass('active');
       $('[class*=slide-image-1]').addClass('active');
+      $('[class*=slide-bg-1]').addClass('active');
     }, 1000);
 
     function hideCurrent() {
       $(`[class*=slide-heading-${count}]`).removeClass('active');
       $(`[class*=slide-sub-${count}]`).removeClass('active');
       $(`[class*=slide-image-${count}]`).removeClass('active');
+      $(`[class*=slide-bg-${count}]`).removeClass('active');
     }
 
     function showCurrent() {
+      $('.uc-container .t396__artboard').css('background-color', colors[count].bg);
+      $('.main-button .tn-atom').css('background-color', colors[count].button);
+      setTimeout(() => {
+        $(`[class*=slide-bg-${count}]`).addClass('active');
+      }, 50);
       setTimeout(() => {
         $(`[class*=slide-heading-${count}]`).addClass('active');
       }, 400);
       setTimeout(() => {
         $(`[class*=slide-sub-${count}]`).addClass('active');
-      }, 500);
+      }, 450);
       setTimeout(() => {
         $(`[class*=slide-image-${count}]`).addClass('active');
-      }, 600);
+      }, 500);
     }
 
     function nextSlide() {
