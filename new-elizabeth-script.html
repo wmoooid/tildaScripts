@@ -53,29 +53,28 @@
 <style>
   .t396__artboard,
   .main-button .tn-atom {
-    transition: background-color 400ms ease-out;
+    transition: background-color 300ms ease-out;
   }
 
   [class*='slide-'] {
-    transition: transform 400ms ease-out, opacity 400ms ease-out;
+    transition: transform 300ms ease-out, opacity 300ms ease-out;
   }
 
   [class*='slide-heading'] {
     opacity: 0;
-    transform: translateX(-200px) rotateZ(-5deg);
+    transform: translateX(-100px) rotateZ(-1deg);
     transform-origin: left top;
   }
 
   [class*='slide-sub'] {
     opacity: 0;
-    transform: translateX(-100px) rotateZ(-3deg);
+    transform: translateX(-100px) rotateZ(-1deg);
     transform-origin: left top;
   }
 
   [class*='slide-image'] {
     opacity: 0;
-    transform: translateX(200px) rotateZ(-10deg);
-    transform-origin: right bottom;
+    transform: translateX(100px) rotateZ(10deg);
   }
 
   [class*='slide-bg'] {
@@ -89,7 +88,7 @@
   [class*='slide-bg'].active {
     opacity: 1;
     transform: none;
-    transition: transform 700ms cubic-bezier(0.45, 1.45, 0.8, 1), opacity 400ms ease-out;
+    transition: transform 600ms cubic-bezier(0.45, 1.45, 0.8, 1), opacity 350ms ease-out;
   }
 </style>
 

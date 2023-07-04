@@ -1,0 +1,21 @@
+<script>
+  $(document).ready(() => {
+    let myDate = new Date();
+    myDate.setMonth(myDate.getMonth() + 1);
+    myDate.setDate(0);
+
+    let options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+
+    const formattedDate = new Intl.DateTimeFormat('ru-RU', options).format(myDate);
+
+    $('.uc-disclaimer span').each((i, elem) => {
+      if ($(elem).text() === '%date-end%') {
+        $(elem).text(formattedDate);
+      }
+    });
+  });
+</script>
