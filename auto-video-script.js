@@ -28,7 +28,7 @@ styles.innerHTML = `.t-store__prod-snippet__container {
 }
 
 .t-store__prod-popup__slider {
-  width: 60% !important;
+  width: 58% !important;
   max-width: none !important;
   height: 100% !important;
   opacity: 0;
@@ -45,10 +45,6 @@ styles.innerHTML = `.t-store__prod-snippet__container {
 .t-slds__bgimg {
   background-size: contain !important;
   padding: unset !important;
-}
-
-.t-slds__item {
-  width: 36% !important;
 }
 
 .t-store__prod-popup__title-wrapper > .t-store__prod-popup__name {
@@ -85,6 +81,27 @@ styles.innerHTML = `.t-store__prod-snippet__container {
   animation-timing-function: ease-out;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
+}
+
+.t-slds__arrow_wrapper,
+.t-slds__thumbsbullet-wrapper {
+  display: none !important;
+}
+
+.t-slds__items-wrapper {
+  transform: none !important;
+  width: unset !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.t-slds__item {
+  display: none;
+}
+
+.t-slds__item:nth-child(2) {
+  display: unset !important;
 }
 
 @keyframes leftside-in {
@@ -151,18 +168,17 @@ styles.innerHTML = `.t-store__prod-snippet__container {
 `;
 document.body.append(styles);
 
+$('.t-store__prod-popup__slider').addClass('leftside-in');
 setTimeout(() => {
-  $('.t-store__prod-popup__slider').addClass('leftside-in');
-  setTimeout(() => {
-    $('.t-store__prod-popup__slider').removeClass('leftside-in');
-    $('.t-store__prod-popup__slider').addClass('leftside-out');
-  }, 6000);
+  $('.t-store__prod-popup__slider').removeClass('leftside-in');
+  $('.t-store__prod-popup__slider').addClass('leftside-out');
+}, 6000);
 
-  setTimeout(() => {
-    $('.t-store__prod-popup__info').addClass('rightside-in');
-    setTimeout(() => {
-      $('.t-store__prod-popup__info').removeClass('rightside-in');
-      $('.t-store__prod-popup__info').addClass('rightside-out');
-    }, 6000);
-  }, 500);
-}, 1000);
+$('.t-store__prod-popup__info').addClass('rightside-in');
+setTimeout(() => {
+  $('.t-store__prod-popup__info').removeClass('rightside-in');
+  $('.t-store__prod-popup__info').addClass('rightside-out');
+  $('.t-store__prod-popup__info').on('animationend', () => {
+    $('#rec1').css('background-color', 'red');
+  });
+}, 6000);
