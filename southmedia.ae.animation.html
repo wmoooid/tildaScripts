@@ -1,0 +1,120 @@
+<div class="second">
+  <div class="first-container">
+    <div class="first-row active">Get Exceptional Real Estate Sales Growth</div>
+    <div class="first-row">Get High-Quality Real Estate Leads</div>
+    <div class="first-row">Get Optimized Business Performance</div>
+    <div class="first-row">Get Advanced Digital Strategies</div>
+    <div class="first-row">Get High-Performance Web Development</div>
+  </div>
+  <div class="second-container">
+    <div class="second-row active">From Performance-Based Strategies</div>
+    <div class="second-row">For Your Business Expansion</div>
+    <div class="second-row">From Targeted Property Advertising</div>
+    <div class="second-row">For Real Estate Market Domination</div>
+    <div class="second-row">For Unbeatable Real Estate Online Presence</div>
+  </div>
+</div>
+
+<style>
+  .first-container,
+  .second-container {
+    display: grid;
+  }
+
+  .first-row,
+  .second-row {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    font-family: 'Sora';
+    font-size: 5rem;
+    line-height: 1.2;
+    font-weight: 300;
+    letter-spacing: -0.3rem;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 500ms ease-out, transform 750ms cubic-bezier(0.45, 1.45, 0.8, 1);
+    transform: rotateX(90deg) translateZ(-50px);
+    transform-style: preserve-3d;
+  }
+
+  .first-row.active,
+  .second-row.active {
+    transform: translateZ(50px);
+    opacity: 1;
+  }
+
+  .first-row.hide,
+  .second-row.hide {
+    transform: rotateX(-90deg) translateZ(-50px);
+    opacity: 0;
+  }
+
+  .second-row {
+    font-weight: 600;
+  }
+
+  @media screen and (max-width: 1200px) {
+    .first-row,
+    .second-row {
+      font-size: 4rem;
+    }
+  }
+
+  @media screen and (max-width: 960px) {
+    .first-row,
+    .second-row {
+      font-size: 4rem;
+    }
+  }
+
+  @media screen and (max-width: 640px) {
+    .first-row,
+    .second-row {
+      font-size: 3.5rem;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .first-row,
+    .second-row {
+      font-size: 2.2rem;
+      letter-spacing: -0.1rem;
+    }
+  }
+</style>
+
+<script>
+  function second() {
+    const firstContainer = document.querySelector('.second .first-container');
+    const secondContainer = document.querySelector('.second .second-container');
+
+    const firstRowArr = document.querySelectorAll('.second .first-row');
+    const secondRowArr = document.querySelectorAll('.second .second-row');
+
+    let current = 0;
+    let max = firstRowArr.length - 1;
+
+    setInterval(() => {
+      firstRowArr.forEach((item) => {
+        item.classList.remove('active');
+        item.classList.remove('hide');
+      });
+      secondRowArr.forEach((item) => {
+        item.classList.remove('active');
+        item.classList.remove('hide');
+      });
+      firstRowArr[current].classList.add('hide');
+      secondRowArr[current].classList.add('hide');
+      if (current >= max) {
+        current = 0;
+      } else {
+        current++;
+      }
+      firstRowArr[current].classList.add('active');
+      setTimeout(() => {
+        secondRowArr[current].classList.add('active');
+      }, 50);
+    }, 3000);
+  }
+  second();
+</script>
