@@ -1,0 +1,18 @@
+<script>
+  document.addEventListener('tStoreRendered', () => {
+    $('.t-store__card').each((i, el) => {
+      if ($(el).hasClass('changed')) return;
+
+      $(el).addClass('changed');
+
+      const creditText = $(el).find('.js-product-option-name').eq(0).text();
+      $(el).find('.js-store-prod-btn .t-store__card__btn-text').text(creditText);
+
+      const btnsWrapper = $(el).find('.t-store__card__btns-wrapper');
+      const thirdButton = btnsWrapper.children('.t-store__card__btn_second').clone();
+      thirdButton.attr('href', '#popup:callback');
+      thirdButton.children('.t-store__card__btn-text').text('Получить персональную цену');
+      thirdButton.appendTo(btnsWrapper);
+    });
+  });
+</script>

@@ -1,4 +1,4 @@
-<div class="second">
+<div class="hero-heading-container">
   <div class="first-container">
     <div class="first-row active">Get Exceptional Real Estate Sales Growth</div>
     <div class="first-row">Get High-Quality Real Estate Leads</div>
@@ -16,6 +16,12 @@
 </div>
 
 <style>
+  .hero-heading-container {
+    display: grid;
+    grid-template-rows: 1fr;
+    gap: 0.5rem;
+  }
+
   .first-container,
   .second-container {
     display: grid;
@@ -26,13 +32,13 @@
     grid-row-start: 1;
     grid-column-start: 1;
     font-family: 'Sora';
-    font-size: 5rem;
-    line-height: 1.2;
+    font-size: 4.5rem;
+    line-height: 1;
     font-weight: 300;
-    letter-spacing: -0.3rem;
+    letter-spacing: -0.2rem;
     text-align: center;
     opacity: 0;
-    transition: opacity 500ms ease-out, transform 750ms cubic-bezier(0.45, 1.45, 0.8, 1);
+    transition: opacity 400ms ease-out, transform 750ms cubic-bezier(0.45, 1.45, 0.8, 1);
     transform: rotateX(90deg) translateZ(-50px);
     transform-style: preserve-3d;
   }
@@ -63,21 +69,21 @@
   @media screen and (max-width: 960px) {
     .first-row,
     .second-row {
-      font-size: 4rem;
+      font-size: 3.25rem;
     }
   }
 
   @media screen and (max-width: 640px) {
     .first-row,
     .second-row {
-      font-size: 3.5rem;
+      font-size: 2.5rem;
     }
   }
 
   @media screen and (max-width: 480px) {
     .first-row,
     .second-row {
-      font-size: 2.2rem;
+      font-size: 1.5rem;
       letter-spacing: -0.1rem;
     }
   }
@@ -85,11 +91,11 @@
 
 <script>
   function second() {
-    const firstContainer = document.querySelector('.second .first-container');
-    const secondContainer = document.querySelector('.second .second-container');
+    const firstContainer = document.querySelector('.first-container');
+    const secondContainer = document.querySelector('.second-container');
 
-    const firstRowArr = document.querySelectorAll('.second .first-row');
-    const secondRowArr = document.querySelectorAll('.second .second-row');
+    const firstRowArr = document.querySelectorAll('.first-row');
+    const secondRowArr = document.querySelectorAll('.second-row');
 
     let current = 0;
     let max = firstRowArr.length - 1;
