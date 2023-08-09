@@ -1,0 +1,21 @@
+<script>
+  const
+
+  // Заполняем пустые ячейки
+  (function fillEmpty() {
+    if (comps.length === 0) return;
+
+    const newItem = {};
+
+    const randomKey = () => Math.floor(Math.random() * comps.length);
+
+    Object.keys(comps[0]).forEach((key) => {
+      newItem[key] = comps[randomKey()][key];
+    });
+
+    comps.push(newItem);
+
+    if (comps.length < 3) fillEmpty();
+  })();
+  //
+</script>
