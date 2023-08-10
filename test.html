@@ -1,21 +1,252 @@
+<!--Фиксы для всех внутренних страниц-->
+
 <script>
-  const
+  //Распределение характеристик
+  $('.js-store-prod-all-charcs').appendTo('.t-store__prod-popup__info');
+  $('.js-store-prod-charcs').each((i, el) => {
+    const charcs = $(el).text().split(': ');
+    $(el).html(`<span>${charcs[0]}</span><span>${charcs[1]}</span>`);
+  });
 
-  // Заполняем пустые ячейки
-  (function fillEmpty() {
-    if (comps.length === 0) return;
+  // Добавление кнопки
+  $('<a/>', {
+    class: 'cta-button',
+    href: '#popup:callback',
+    text: 'Узнать подробнее',
+  }).appendTo('.t-store__prod-popup__info');
 
-    const newItem = {};
+  // Обработчик кнопки назад
+  $('.prod-back-button').on('click', () => {
+    window.history.back();
+    setTimeout(() => {
+      window.location.replace(`https://${window.location.hostname}`);
+    }, 100);
+  });
 
-    const randomKey = () => Math.floor(Math.random() * comps.length);
+  $(window).load(() => {
+    setTimeout(() => {
+      // Вывод цены за метр
+      const square = Number($('.t-store__prod-popup__price .t-store__prod__price-portion').text().replace(/\D/g, ''));
+      const price = Number($('.t-store__prod-popup__price-value').text().replace(/\D/g, ''));
+      const pricePerMeter = Math.floor(price / square);
+      $('.t-store__prod-popup__price .t-store__prod__price-portion').text(`$${pricePerMeter} за м²`);
 
-    Object.keys(comps[0]).forEach((key) => {
-      newItem[key] = comps[randomKey()][key];
+      setTimeout(() => {
+        t_slds_updateSlider(621548030);
+      }, 1000);
+    }, 100);
+  });
+</script>
+
+<style>
+  .prod-back-button {
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .t-store__prod-snippet__container {
+    position: relative;
+    z-index: 100;
+    padding: 0 !important;
+  }
+
+  .t-store__product-snippet > .t-container.t-container_fluid {
+    max-width: 1440px !important;
+  }
+
+  .t-store__prod-popup__slider {
+    margin-left: 0 !important;
+    aspect-ratio: 4/3;
+  }
+
+  .t-slds {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(13, 25, 51, 0.1);
+  }
+
+  .t-slds__bgimg {
+    background-size: contain;
+  }
+
+  .t-store__prod-popup__info {
+    display: flex;
+    flex-direction: column;
+    padding: 32px !important;
+    box-sizing: border-box;
+    border-radius: 12px;
+    border: 1px solid rgba(13, 25, 51, 0.1);
+    background: #fff;
+    max-width: unset !important;
+  }
+
+  .t-store__prod-popup__name {
+    font-size: 28px !important;
+    color: #0d1933 !important;
+    line-height: 1.05 !important;
+  }
+
+  .t-store__prod-popup__title-wrapper {
+    order: 2;
+    margin-top: 4px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .t-store__prod-popup__price-wrapper {
+    margin-top: 24px !important;
+    order: 2;
+  }
+
+  .t-store__prod-popup__price-value {
+    padding: 2px 12px !important;
+    border-radius: 100px !important;
+    background: #f46c3d !important;
+  }
+
+  .t-store__prod-popup__price-value::before {
+    content: '$ ';
+  }
+
+  .t-store__prod-popup__text {
+    order: 1;
+    margin-top: 0 !important;
+
+    color: rgba(13, 25, 51, 0.5);
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 140%;
+    letter-spacing: -0.16px;
+  }
+
+  .t-store__prod__price-portion {
+    color: rgba(13, 25, 51, 0.5) !important;
+    font-size: 16px !important;
+    font-weight: 300 !important;
+    line-height: 140% !important;
+    letter-spacing: -0.16px !important;
+  }
+
+  .t-store__prod-popup__text > .js-store-prod-all-charcs {
+    display: none;
+  }
+
+  .js-store-prod-all-charcs {
+    order: 3;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .js-store-prod-charcs {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding-bottom: 12px;
+    font-family: Inter;
+    font-size: 16px;
+    line-height: 140%;
+    letter-spacing: -0.16px;
+  }
+
+  .js-store-prod-charcs > span:nth-child(2) {
+    color: #0d1933;
+    font-weight: 400;
+  }
+
+  .js-store-prod-charcs > span:nth-child(1) {
+    color: rgba(13, 25, 51, 0.5);
+    font-weight: 300;
+  }
+
+  .js-store-prod-charcs:not(:last-child) {
+    border-bottom: 1px solid rgba(13, 25, 51, 0.1);
+  }
+
+  .cta-button {
+    order: 4;
+    display: flex;
+    margin-top: 24px;
+    padding: 16px 32px;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+    border-radius: 4px;
+    background: #f46c3d;
+    color: #fff !important;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .t-slds__thumbsbullet-wrapper {
+    display: none;
+  }
+
+  .js-product-controls-wrapper {
+    display: none;
+  }
+
+  @media (max-width: 1600px) {
+    .t-store__product-snippet > .t-container.t-container_fluid {
+      max-width: 1160px !important;
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .t-store__product-snippet > .t-container.t-container_fluid {
+      max-width: 940px !important;
+    }
+
+    .t-store__prod-popup__slider {
+      padding: 0 !important;
+      margin-bottom: 16px !important;
+    }
+
+    .t-store__prod-popup__info {
+      margin: 0 !important;
+    }
+  }
+
+  @media (min-width: 960px) {
+    .t-container_fluid {
+      display: flex;
+    }
+    .t-store__prod-popup__info {
+      max-width: unset !important;
+      margin-left: 0 !important;
+      height: fit-content;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .t-store__product-snippet > .t-container.t-container_fluid {
+      max-width: 620px !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .t-store__product-snippet > .t-container.t-container_fluid {
+      max-width: 460px !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .t-store__product-snippet > .t-container.t-container_fluid {
+      max-width: 300px !important;
+    }
+  }
+</style>
+
+<script>
+  const mutationObserver = new MutationObserver((entries) => {
+    $('.t-store__card').each((i, el) => {
+      const text = $(el).find('.js-product-option-name').eq(0).text();
+      $(el).find('.t-store__card__btn-text').text(text);
     });
+  });
 
-    comps.push(newItem);
+  const cardsContainer = document.querySelector('.js-store-grid-cont');
 
-    if (comps.length < 3) fillEmpty();
-  })();
-  //
+  mutationObserver.observe(cardsContainer, { childList: true });
 </script>
