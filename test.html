@@ -31,7 +31,7 @@
       const pricePerMeter = Math.floor(price / square);
       $('.t-store__prod-popup__price .t-store__prod__price-portion').text(`$${pricePerMeter} за м²`);
 
-      setTimeout(() => {
+      setInterval(() => {
         t_slds_updateSlider(621548030);
       }, 1000);
     }, 100);
@@ -239,14 +239,10 @@
 </style>
 
 <script>
-  const mutationObserver = new MutationObserver((entries) => {
-    $('.t-store__card').each((i, el) => {
-      const text = $(el).find('.js-product-option-name').eq(0).text();
-      $(el).find('.t-store__card__btn-text').text(text);
-    });
+  const observer = new ResizeObserver((entries) => {
+    const entry = entries[0];
+    console.log('contentRect', entry.contentRect);
   });
 
-  const cardsContainer = document.querySelector('.js-store-grid-cont');
-
-  mutationObserver.observe(cardsContainer, { childList: true });
+  observer.observe(document.querySelector('.t-slds__main'));
 </script>
