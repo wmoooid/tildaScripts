@@ -2,10 +2,6 @@
   pointer-events: none;
 }
 
-.pos-relative {
-  position: relative;
-}
-
 .uc-hero-images {
   position: relative;
   z-index: 10;
@@ -230,6 +226,15 @@
   padding: 0 !important;
 }
 
+.zero-quiz-container,
+.uc-quiz-container,
+.uc-quiz-container .t835,
+.uc-quiz-container .t-container,
+.uc-quiz-container .t835__col,
+.uc-quiz-container .t835__quiz {
+  height: 100%;
+}
+
 .t835__quiz {
   overflow: hidden;
 }
@@ -271,6 +276,16 @@
   bottom: unset !important;
 }
 
+/*.t835__btn_prev {*/
+/*  width: 45px !important;*/
+/*  padding: 0 !important;*/
+/*}*/
+
+/*.t835__btn-wrapper .t835__btn_prev td::before {*/
+/*  top: 48%;*/
+/*  left: 31%;*/
+/*}*/
+
 .uc-properties-store .t-store__card__descr {
   display: flex;
   align-items: center;
@@ -297,6 +312,20 @@
 
 .t-store__load-more-btn {
   width: 1440px;
+}
+
+/*.tn-elem[data-elem-id='1690522624802'] {*/
+/*  position: relative !important;*/
+/*  height: unset !important;*/
+/*}*/
+
+/*.t396__artboard[data-artboard-recid='621537273'],*/
+/*.t396__artboard[data-artboard-recid='621196231'] {*/
+/*  height: unset !important;*/
+/*}*/
+
+.pos-relative {
+  position: relative;
 }
 
 .uc-apartments-store .t-store__card__bgimg {
@@ -403,6 +432,19 @@
   }
 }
 
+@media (max-width: 960px) {
+  .t-store__load-more-btn {
+    width: 460px;
+  }
+
+  .t-store__grid-cont {
+    max-width: 480px;
+    column-gap: 24px;
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+  }
+}
+
 @media (max-width: 480px) {
   .t-store__load-more-btn {
     width: 300px;
@@ -420,6 +462,14 @@
     width: 100% !important;
     transform: none !important;
     padding: 0 !important;
+  }
+
+  .t-store__card__title {
+    font-size: 22px !important;
+  }
+
+  .t-store__card__price-value {
+    font-size: 14px !important;
   }
 
   .t668__title {
