@@ -1,248 +1,107 @@
-<!--Фиксы для всех внутренних страниц-->
+<div class="t-width t-width_100">
+  <script>
+    $(document).ready(function () {
+      $(function () {
+        let liter = 'a'; //Литера для сборки
+        let oneAcc = false; // Открывать по одной вкладке  false - true
+        let accOpen = true; // Открытая  вкладка  false - true
+        let openNum = 1; // Номер открытой вкладки
+        let scroll = false; // Скролл к открытой вкладке  false - true
 
-<script>
-  //Распределение характеристик
-  $('.js-store-prod-all-charcs').appendTo('.t-store__prod-popup__info');
-  $('.js-store-prod-charcs').each((i, el) => {
-    const charcs = $(el).text().split(': ');
-    $(el).html(`<span>${charcs[0]}</span><span>${charcs[1]}</span>`);
-  });
+        $('div[class*="uc-accord-' + liter + '"]').each(function (index) {
+          $('.uc-accord-' + liter + '-' + index + ':first')
+            .addClass('title-accord')
+            .attr('data-accord-index', index);
+          $('.uc-accord-' + liter + '-' + index + '')
+            .not(':first')
+            .addClass('content-accord hide-accord');
+        });
 
-  // Добавление кнопки
-  $('<a/>', {
-    class: 'cta-button',
-    href: '#popup:callback',
-    text: 'Узнать подробнее',
-  }).appendTo('.t-store__prod-popup__info');
+        if (accOpen) {
+          $('div[class*="uc-accord-' + liter + '-' + openNum + '"]').addClass('active-accord');
+          $('div.content-accord[class*="uc-accord-' + liter + '-' + openNum + '"]').removeClass('hide-accord');
+        }
 
-  // Обработчик кнопки назад
-  $('.prod-back-button').on('click', () => {
-    window.history.back();
-    setTimeout(() => {
-      window.location.replace(`https://${window.location.hostname}`);
-    }, 100);
-  });
+        setTimeout(function () {
+          $('.content-accord').addClass('time-step');
+        }, 1500);
 
-  $(window).load(() => {
-    setTimeout(() => {
-      // Вывод цены за метр
-      const square = Number($('.t-store__prod-popup__price .t-store__prod__price-portion').text().replace(/\D/g, ''));
-      const price = Number($('.t-store__prod-popup__price-value').text().replace(/\D/g, ''));
-      const pricePerMeter = Math.floor(price / square);
-      $('.t-store__prod-popup__price .t-store__prod__price-portion').text(`$${pricePerMeter} за м²`);
+        function videoStop() {
+          setTimeout(function () {
+            $('div.content-accord.hide-accord[class*="uc-accord-' + liter + '-"]').each(function () {
+              let videoNum = $(this).find('div[data-elem-type="video"]').length;
+              if (videoNum) {
+                $(this)
+                  .find('div[data-elem-type="video"]')
+                  .each(function () {
+                    $(this)
+                      .find('iframe')
+                      .attr('src', function (i, val) {
+                        return val;
+                      });
+                  });
+              }
+            });
+          }, 300);
+        }
 
-      setInterval(() => {
-        t_slds_updateSlider(621548030);
-      }, 1000);
-    }, 100);
-  });
-</script>
+        $('div[class*="uc-accord-' + liter + '"]')
+          .find('.accord')
+          .click(function (e) {
+            let cT = $(this).closest('.title-accord');
+            let ind = cT.attr('data-accord-index');
 
-<style>
-  .prod-back-button {
-    user-select: none;
-    cursor: pointer;
-  }
+            if (oneAcc) {
+              //По одной  вкладке
+              if (cT.hasClass('active-accord')) {
+                cT.removeClass('active-accord');
+                $('div.content-accord.uc-accord-' + liter + '-' + ind + '').toggleClass('hide-accord');
+                videoStop();
+              } else {
+                $('div.title-accord[class*="uc-accord-' + liter + '"]').removeClass('active-accord');
+                cT.addClass('active-accord');
+                $('div.content-accord[class*="uc-accord-' + liter + '-"]').addClass('hide-accord');
+                $('div.content-accord.uc-accord-' + liter + '-' + ind + '').removeClass('hide-accord');
+                videoStop();
+              }
+            } else {
+              //По несколько вкладок
+              cT.toggleClass('active-accord');
+              $('div.content-accord.uc-accord-' + liter + '-' + ind + '').toggleClass('hide-accord');
+              videoStop();
+            }
 
-  .t-store__prod-snippet__container {
-    position: relative;
-    z-index: 100;
-    padding: 0 !important;
-  }
+            if (scroll) {
+              //скролл до вкладки
+              let el = $(this).closest('.r');
+              setTimeout(function () {
+                $('html, body').animate({ scrollTop: el.offset().top - 50 }, 400);
+              }, 600);
+            }
+          });
+      });
+    });
+  </script>
 
-  .t-store__product-snippet > .t-container.t-container_fluid {
-    max-width: 1440px !important;
-  }
-
-  .t-store__prod-popup__slider {
-    margin-left: 0 !important;
-    aspect-ratio: 4/3;
-  }
-
-  .t-slds {
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid rgba(13, 25, 51, 0.1);
-  }
-
-  .t-slds__bgimg {
-    background-size: contain;
-  }
-
-  .t-store__prod-popup__info {
-    display: flex;
-    flex-direction: column;
-    padding: 32px !important;
-    box-sizing: border-box;
-    border-radius: 12px;
-    border: 1px solid rgba(13, 25, 51, 0.1);
-    background: #fff;
-    max-width: unset !important;
-  }
-
-  .t-store__prod-popup__name {
-    font-size: 28px !important;
-    color: #0d1933 !important;
-    line-height: 1.05 !important;
-  }
-
-  .t-store__prod-popup__title-wrapper {
-    order: 2;
-    margin-top: 4px !important;
-    margin-bottom: 0 !important;
-  }
-
-  .t-store__prod-popup__price-wrapper {
-    margin-top: 24px !important;
-    order: 2;
-  }
-
-  .t-store__prod-popup__price-value {
-    padding: 2px 12px !important;
-    border-radius: 100px !important;
-    background: #f46c3d !important;
-  }
-
-  .t-store__prod-popup__price-value::before {
-    content: '$ ';
-  }
-
-  .t-store__prod-popup__text {
-    order: 1;
-    margin-top: 0 !important;
-
-    color: rgba(13, 25, 51, 0.5);
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 140%;
-    letter-spacing: -0.16px;
-  }
-
-  .t-store__prod__price-portion {
-    color: rgba(13, 25, 51, 0.5) !important;
-    font-size: 16px !important;
-    font-weight: 300 !important;
-    line-height: 140% !important;
-    letter-spacing: -0.16px !important;
-  }
-
-  .t-store__prod-popup__text > .js-store-prod-all-charcs {
-    display: none;
-  }
-
-  .js-store-prod-all-charcs {
-    order: 3;
-    margin-top: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .js-store-prod-charcs {
-    display: flex;
-    justify-content: space-between;
-    margin: 0;
-    padding-bottom: 12px;
-    font-family: Inter;
-    font-size: 16px;
-    line-height: 140%;
-    letter-spacing: -0.16px;
-  }
-
-  .js-store-prod-charcs > span:nth-child(2) {
-    color: #0d1933;
-    font-weight: 400;
-  }
-
-  .js-store-prod-charcs > span:nth-child(1) {
-    color: rgba(13, 25, 51, 0.5);
-    font-weight: 300;
-  }
-
-  .js-store-prod-charcs:not(:last-child) {
-    border-bottom: 1px solid rgba(13, 25, 51, 0.1);
-  }
-
-  .cta-button {
-    order: 4;
-    display: flex;
-    margin-top: 24px;
-    padding: 16px 32px;
-    justify-content: center;
-    align-items: center;
-    align-self: stretch;
-    border-radius: 4px;
-    background: #f46c3d;
-    color: #fff !important;
-    font-family: Inter;
-    font-size: 16px;
-    font-weight: 600;
-  }
-
-  .t-slds__thumbsbullet-wrapper {
-    display: none;
-  }
-
-  .js-product-controls-wrapper {
-    display: none;
-  }
-
-  @media (max-width: 1600px) {
-    .t-store__product-snippet > .t-container.t-container_fluid {
-      max-width: 1160px !important;
+  <style>
+    .hide-accord .t396__artboard {
+      height: 0 !important;
+      pointer-events: none !important;
+      overflow: hidden !important;
     }
-  }
-
-  @media (max-width: 1200px) {
-    .t-store__product-snippet > .t-container.t-container_fluid {
-      max-width: 940px !important;
+    .content-accord.time-step .t396__artboard,
+    .accord-icon {
+      transition: all 0.4s ease-in-out;
     }
-
-    .t-store__prod-popup__slider {
-      padding: 0 !important;
-      margin-bottom: 16px !important;
+    .content-accord {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
     }
-
-    .t-store__prod-popup__info {
-      margin: 0 !important;
+    .active-accord .accord-icon {
+      transform: rotate(180deg);
     }
-  }
-
-  @media (min-width: 960px) {
-    .t-container_fluid {
-      display: flex;
+    .accord {
+      cursor: pointer;
     }
-    .t-store__prod-popup__info {
-      max-width: unset !important;
-      margin-left: 0 !important;
-      height: fit-content;
-    }
-  }
-
-  @media (max-width: 960px) {
-    .t-store__product-snippet > .t-container.t-container_fluid {
-      max-width: 620px !important;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .t-store__product-snippet > .t-container.t-container_fluid {
-      max-width: 460px !important;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .t-store__product-snippet > .t-container.t-container_fluid {
-      max-width: 300px !important;
-    }
-  }
-</style>
-
-<script>
-  const observer = new ResizeObserver((entries) => {
-    const entry = entries[0];
-    console.log('contentRect', entry.contentRect);
-  });
-
-  observer.observe(document.querySelector('.t-slds__main'));
-</script>
+  </style>
+</div>
