@@ -1,107 +1,48 @@
-<div class="t-width t-width_100">
-  <script>
-    $(document).ready(function () {
-      $(function () {
-        let liter = 'a'; //Литера для сборки
-        let oneAcc = false; // Открывать по одной вкладке  false - true
-        let accOpen = true; // Открытая  вкладка  false - true
-        let openNum = 1; // Номер открытой вкладки
-        let scroll = false; // Скролл к открытой вкладке  false - true
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=52d2334c-3397-4e69-8e82-0ccac3a7b5ed" type="text/javascript"></script>
+<div id="map" style="width: 100%"></div>
+<script>
+  ymaps.ready(init);
 
-        $('div[class*="uc-accord-' + liter + '"]').each(function (index) {
-          $('.uc-accord-' + liter + '-' + index + ':first')
-            .addClass('title-accord')
-            .attr('data-accord-index', index);
-          $('.uc-accord-' + liter + '-' + index + '')
-            .not(':first')
-            .addClass('content-accord hide-accord');
-        });
-
-        if (accOpen) {
-          $('div[class*="uc-accord-' + liter + '-' + openNum + '"]').addClass('active-accord');
-          $('div.content-accord[class*="uc-accord-' + liter + '-' + openNum + '"]').removeClass('hide-accord');
-        }
-
-        setTimeout(function () {
-          $('.content-accord').addClass('time-step');
-        }, 1500);
-
-        function videoStop() {
-          setTimeout(function () {
-            $('div.content-accord.hide-accord[class*="uc-accord-' + liter + '-"]').each(function () {
-              let videoNum = $(this).find('div[data-elem-type="video"]').length;
-              if (videoNum) {
-                $(this)
-                  .find('div[data-elem-type="video"]')
-                  .each(function () {
-                    $(this)
-                      .find('iframe')
-                      .attr('src', function (i, val) {
-                        return val;
-                      });
-                  });
-              }
-            });
-          }, 300);
-        }
-
-        $('div[class*="uc-accord-' + liter + '"]')
-          .find('.accord')
-          .click(function (e) {
-            let cT = $(this).closest('.title-accord');
-            let ind = cT.attr('data-accord-index');
-
-            if (oneAcc) {
-              //По одной  вкладке
-              if (cT.hasClass('active-accord')) {
-                cT.removeClass('active-accord');
-                $('div.content-accord.uc-accord-' + liter + '-' + ind + '').toggleClass('hide-accord');
-                videoStop();
-              } else {
-                $('div.title-accord[class*="uc-accord-' + liter + '"]').removeClass('active-accord');
-                cT.addClass('active-accord');
-                $('div.content-accord[class*="uc-accord-' + liter + '-"]').addClass('hide-accord');
-                $('div.content-accord.uc-accord-' + liter + '-' + ind + '').removeClass('hide-accord');
-                videoStop();
-              }
-            } else {
-              //По несколько вкладок
-              cT.toggleClass('active-accord');
-              $('div.content-accord.uc-accord-' + liter + '-' + ind + '').toggleClass('hide-accord');
-              videoStop();
-            }
-
-            if (scroll) {
-              //скролл до вкладки
-              let el = $(this).closest('.r');
-              setTimeout(function () {
-                $('html, body').animate({ scrollTop: el.offset().top - 50 }, 400);
-              }, 600);
-            }
-          });
-      });
+  function init() {
+    const myMap = new ymaps.Map('map', {
+      center: [45.029917, 39.051771],
+      zoom: 16,
+      controls: [],
     });
-  </script>
 
-  <style>
-    .hide-accord .t396__artboard {
-      height: 0 !important;
-      pointer-events: none !important;
-      overflow: hidden !important;
+    myMap.behaviors.disable(['scrollZoom']);
+
+    point = new ymaps.Placemark(
+      [45.029917, 39.051771],
+      {
+        hintContent: 'Офис продаж',
+      },
+      {
+        iconLayout: 'default#image',
+        iconImageHref: 'https://static.tildacdn.com/tild3330-3131-4430-b437-353562383732/Group_301243.svg',
+        iconImageSize: [40, 51],
+        iconImageOffset: [20, -51],
+      },
+    );
+
+    myMap.geoObjects.add(point);
+  }
+</script>
+
+<style>
+  #map {
+    height: 720px;
+  }
+
+  @media (max-width: 960px) {
+    #map {
+      height: 560px;
     }
-    .content-accord.time-step .t396__artboard,
-    .accord-icon {
-      transition: all 0.4s ease-in-out;
+  }
+
+  @media (max-width: 480px) {
+    #map {
+      height: 480px;
     }
-    .content-accord {
-      padding-top: 0 !important;
-      padding-bottom: 0 !important;
-    }
-    .active-accord .accord-icon {
-      transform: rotate(180deg);
-    }
-    .accord {
-      cursor: pointer;
-    }
-  </style>
-</div>
+  }
+</style>
