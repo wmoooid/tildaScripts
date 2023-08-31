@@ -1,48 +1,108 @@
-<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=52d2334c-3397-4e69-8e82-0ccac3a7b5ed" type="text/javascript"></script>
-<div id="map" style="width: 100%"></div>
-<script>
-  ymaps.ready(init);
-
-  function init() {
-    const myMap = new ymaps.Map('map', {
-      center: [45.029917, 39.051771],
-      zoom: 16,
-      controls: [],
-    });
-
-    myMap.behaviors.disable(['scrollZoom']);
-
-    point = new ymaps.Placemark(
-      [45.029917, 39.051771],
-      {
-        hintContent: 'Офис продаж',
-      },
-      {
-        iconLayout: 'default#image',
-        iconImageHref: 'https://static.tildacdn.com/tild3330-3131-4430-b437-353562383732/Group_301243.svg',
-        iconImageSize: [40, 51],
-        iconImageOffset: [20, -51],
-      },
-    );
-
-    myMap.geoObjects.add(point);
-  }
-</script>
+<ul class="hero-timer-list">
+    <li class="hero-timer-block">
+        <strong class="hero-timer-digit days">03</strong>
+        <small class="hero-timer-caption">дней</small>
+    </li>
+    <li class="hero-timer-block">
+        <strong class="hero-timer-digit hours">12</strong>
+        <small class="hero-timer-caption">часов</small>
+    </li>
+    <li class="hero-timer-block">
+        <strong class="hero-timer-digit minutes">38</strong>
+        <small class="hero-timer-caption">минут</small>
+    </li>
+    <li class="hero-timer-block">
+        <strong class="hero-timer-digit seconds">39</strong>
+        <small class="hero-timer-caption">секунд</small>
+    </li>
+</ul>
 
 <style>
-  #map {
-    height: 720px;
-  }
-
-  @media (max-width: 960px) {
-    #map {
-      height: 560px;
+    .container {
+        width: 370px;
+        height: 78px;
     }
-  }
 
-  @media (max-width: 480px) {
-    #map {
-      height: 480px;
+    .hero-timer-list {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100%;
+        height: 100%;
+        font-family: 'Montserrat', Arial, Helvetica, sans-serif;
     }
-  }
+
+    .hero-timer-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        border: 1px solid #ededed;
+        background: #f7f7f7;
+        box-sizing: border-box;
+    }
+
+    .hero-timer-digit {
+        color: #000;
+        font-size: 32px;
+        font-weight: 400 !important;
+        line-height: 1.15;
+        letter-spacing: -0.64px;
+    }
+
+    .hero-timer-caption {
+        color: rgba(0, 0, 0, 0.7);
+        font-size: 12px;
+        font-weight: 300;
+        letter-spacing: -0.24px;
+    }
+
+    @media (max-width: 480px) {
+        .hero-timer-digit {
+            font-size: 28px;
+        }
+    }
 </style>
+<script>
+    const daysDigit = document.querySelector('.hero-timer-digit.days');
+    const hoursDigit = document.querySelector('.hero-timer-digit.hours');
+    const minutesDigit = document.querySelector('.hero-timer-digit.minutes');
+    const secondsDigit = document.querySelector('.hero-timer-digit.seconds');
+
+    function getTimeRemaining(timeEnd) {
+        const timeRemaining = timeEnd - Date.now();
+        let result = {
+            days: (timeRemaining / (1000 * 60 * 60 * 24)) | 0,
+            hours: (timeRemaining / (1000 * 60 * 60)) % 24 | 0,
+            minutes: (timeRemaining / 1000 / 60) % 60 | 0,
+            seconds: (timeRemaining / 1000) % 60 | 0,
+        };
+
+        for (let key in result) result[key] = ('0' + result[key]).slice(-2);
+
+        return result;
+    }
+
+    const dayEnd = new Date();
+    dayEnd.setMonth(dayEnd.getMonth() + 1);
+    dayEnd.setDate(0);
+    dayEnd.setHours(23, 59, 59, 999);
+
+    function updateTimer() {
+        const time = getTimeRemaining(dayEnd);
+        daysDigit.textContent = time.days;
+        hoursDigit.textContent = time.hours;
+        minutesDigit.textContent = time.minutes;
+        secondsDigit.textContent = time.seconds;
+    }
+
+    updateTimer();
+    setInterval(() => {
+        updateTimer();
+    }, 1000);
+</script>

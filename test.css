@@ -1,18 +1,334 @@
-@media (max-width: 480px) {
-  .t-store__card__descr {
-    font-size: 14px !important;
-    max-width: 42%;
-    line-height: 1.3;
-  }
+:root {
+    --accent-color: #d6141e;
+    --accent-dark: #b20009;
+    --cards-border-radius: 12px;
+    --cards-border-color: rgba(0, 0, 0, 0.1);
+    --modelcard-col-gap: 48px;
+    --modelcard-row-gap: 32px;
+}
 
-  .t-store__card__btn {
+* {
+    letter-spacing: -0.02rem;
+}
+
+#nav633394158 {
+    border-bottom: 1px solid #e5e5e5;
+    backdrop-filter: blur(20px);
+}
+
+.hero-bullet-list li:not(:first-child) {
+    margin-top: 12px;
+}
+
+.hero-bullet-list li::marker {
+    color: var(--accent-color);
+    font-size: 24px;
+}
+
+.button-accent {
+    display: flex;
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: var(--accent-color);
+    color: white !important;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 200ms ease-out;
+}
+
+.button-accent:hover {
+    background: var(--accent-dark);
+}
+
+/*Карточка модельного ряда*/
+
+.t744 .js-product-single {
+    display: flex;
+    gap: var(--modelcard-col-gap);
+
+    padding: 48px;
+    max-width: 1160px;
+
+    border-radius: var(--cards-border-radius);
+    border: 1px solid var(--cards-border-color);
+    background: #fff;
+    background-image: url(https://static.tildacdn.com/tild6464-6632-4232-b865-613166366536/Frame_112.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    box-sizing: border-box;
+}
+
+.t744 .js-product-single .t744__col_first {
+    padding-right: var(--modelcard-col-gap);
+    border-right: 1px solid var(--cards-border-color);
+}
+
+.t744 .js-product {
+    transition: box-shadow 200ms ease-out;
+}
+
+.t744 .js-product:hover {
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.08), 0px 0px 4px 0px rgba(0, 0, 0, 0.04);
+}
+
+.t744 .js-product-single::before,
+.t744 .js-product-single::after {
+    content: unset;
+}
+
+.t744 .js-product-single .t744__col {
+    margin: 0 !important;
+}
+
+.t744 .js-product-single .t744__title-wrapper {
+    margin-bottom: 12px;
+}
+
+.t744__title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+}
+
+.t744__title::after {
+    content: 'Авто в наличии';
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: none;
+    padding-left: 24px;
+    background-size: 16px 16px;
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3Csvg width='18' height='19' viewBox='0 0 18 19' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M17 9.5C17 13.9183 13.4183 17.5 9 17.5C4.58172 17.5 1 13.9183 1 9.5C1 5.08172 4.58172 1.5 9 1.5C10.2552 1.5 11.4428 1.78906 12.5 2.30423M15.5 4.5L8.5 11.5L6.5 9.5' stroke='%234DA621' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+}
+
+.t744__title_small {
+    display: none;
+}
+
+.t744__price {
+    display: inline-flex;
+    width: max-content;
+    padding: 6px 8px;
+
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1;
+
+    border-radius: 4px;
+    background: #4da621;
+}
+
+.t744__price::before {
+    content: 'от ';
+    margin-right: 8px;
+}
+
+.t744__price_old {
+    margin-left: 20px;
+
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1;
+}
+
+.t744 .t-product__option-variants_regular {
+    display: none !important;
+}
+
+.t744 .t-product__option-title {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.t744 .js-product-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    --bg-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.4417 2.92495L12.9084 5.85828C13.1084 6.26662 13.6417 6.65828 14.0917 6.73328L16.75 7.17495C18.45 7.45828 18.85 8.69162 17.625 9.90828L15.5584 11.975C15.2084 12.325 15.0167 13 15.125 13.4833L15.7167 16.0416C16.1834 18.0666 15.1084 18.85 13.3167 17.7916L10.825 16.3166C10.375 16.05 9.63338 16.05 9.17505 16.3166L6.68338 17.7916C4.90005 18.85 3.81671 18.0583 4.28338 16.0416L4.87505 13.4833C4.98338 13 4.79171 12.325 4.44171 11.975L2.37505 9.90828C1.15838 8.69162 1.55005 7.45828 3.25005 7.17495L5.90838 6.73328C6.35005 6.65828 6.88338 6.26662 7.08338 5.85828L8.55005 2.92495C9.35005 1.33328 10.65 1.33328 11.4417 2.92495Z' stroke='%23D6141E' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+}
+
+.t744 .js-product-option::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: var(--bg-image);
+}
+
+.t744 .t-product__option-title {
+    padding: 0 !important;
+}
+
+.t744 .js-product-controls-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: auto;
+}
+
+.t744 .js-product-edition-option {
+    margin: 0 0 var(--modelcard-row-gap) 0 !important;
+    grid-column: 1 / 3;
+}
+
+.t744 .t-product__option-variants {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 8px;
+    margin: 12px 0 0 0 !important;
+}
+
+.t744 .t-product__option-item {
+    width: unset !important;
+    padding: 0 !important;
     margin-bottom: 0 !important;
-    padding: 0 12px !important;
-    gap: 4px;
-    height: 28px;
-  }
+}
 
-  .uc-properties-store .t-store__card__descr::before {
-    flex: none;
-  }
+.t744 .t-product__option-checkmark_color {
+    margin: 0 !important;
+    width: 48px !important;
+    height: 32px !important;
+    border-radius: 8px !important;
+    border: 2px solid #fff !important;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.08), 0px 0px 6px 0px rgba(0, 0, 0, 0.02);
+    transition: box-shadow 200ms ease-out;
+}
+
+.t744 .t-product__option-item_active .t-product__option-checkmark_color {
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.08), 0px 0px 4px 0px rgba(0, 0, 0, 0.04);
+}
+
+.t744 .t-product__option-checkmark_color::before,
+.t744 .t-product__option-checkmark_color::after {
+    content: unset !important;
+}
+
+.t744 .t-product__option-title_radio {
+    display: none;
+}
+
+.t744__descr {
+    display: none;
+}
+
+.t744__btn-wrapper {
+    display: flex;
+    gap: 8px;
+    margin: auto 0 0 0 !important;
+}
+
+.t744__btn-wrapper > * {
+    width: 100%;
+}
+
+.t744__info {
+    height: 100%;
+}
+
+.t744__textwrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.t744 .t-slds__container {
+    border-radius: 8px;
+}
+
+.t744 .t-slds__thumbsbullet-wrapper {
+    display: flex;
+    height: 64px;
+}
+
+.t744 .t-slds__thumbsbullet,
+.t744 .t-slds__thumbsbullet-border {
+    box-sizing: border-box;
+    overflow: hidden;
+    width: 100%;
+    max-height: 64px;
+    border-radius: 8px;
+}
+
+.t744 .t-slds__thumbsbullet .t-slds__bgimg {
+    padding: 0 !important;
+    height: 100%;
+}
+
+/*Карточки комплектаций*/
+
+/*.t1025 .js-store-parts-switcher:nth-child(-n+2) {*/
+/*    display: none;*/
+/*}*/
+
+.t1025 .t-store__parts-switch-btn-all {
+    display: none;
+}
+
+.t1025 .t-store__card {
+    justify-content: space-evenly;
+    margin-bottom: 16px;
+    padding: 20px 48px !important;
+    border: 1px solid #e5e5e5 !important;
+    border-radius: var(--cards-border-radius);
+}
+
+.t1025 .t-store__card__contentwrapper {
+    display: grid;
+}
+
+.t1025 .t-store__card__textwrapper {
+    grid-column: 2;
+}
+
+.t1025 .t-store__card__price-buttons {
+    width: unset !important;
+    grid-column: 3 / 4;
+    justify-content: space-between;
+}
+
+.t1025 .t-store__card__price-wrapper {
+    flex-direction: column;
+}
+
+.t1025 .js-product-price::before {
+    content: 'от ';
+}
+
+.t1025 .t-store__card__price_old {
+    margin: 0 !important;
+    font-size: 16px !important;
+    font-weight: 300 !important;
+}
+
+.t1025 .t-store__parts-switch-wrapper {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    margin-bottom: 24px;
+    padding: 0 8px;
+}
+
+.t1025 .t-store__parts-switch-btn {
+    width: 100%;
+    padding: 8px 24px;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.t1025 .t-store__parts-switch-btn.t-active {
+    color: #000;
+    opacity: 1;
+    border-bottom: 2px solid var(--accent-color);
+    font-weight: 600;
 }
