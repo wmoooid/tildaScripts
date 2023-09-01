@@ -170,15 +170,15 @@ document.body.append(styles);
 
 $('.t-store__prod-popup__slider').addClass('leftside-in');
 setTimeout(() => {
-  $('.t-store__prod-popup__slider').removeClass('leftside-in');
-  $('.t-store__prod-popup__slider').addClass('leftside-out');
+    $('.t-store__prod-popup__slider').removeClass('leftside-in');
+    $('.t-store__prod-popup__slider').addClass('leftside-out');
 }, 6000);
 
 $('.t-store__prod-popup__info').addClass('rightside-in');
 setTimeout(() => {
-  $('.t-store__prod-popup__info').removeClass('rightside-in');
-  $('.t-store__prod-popup__info').addClass('rightside-out');
-  $('.t-store__prod-popup__info').on('animationend', () => {
-    $('#rec1').css('background-color', 'red');
-  });
+    $('.t-store__prod-popup__info').removeClass('rightside-in');
+    $('.t-store__prod-popup__info').addClass('rightside-out');
+    $('.t-store__prod-popup__info').on('animationend', () => {
+        $('.t-rec').css('background-color', 'red');
+    });
 }, 6000);
