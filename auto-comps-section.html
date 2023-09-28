@@ -1,0 +1,317 @@
+<style>
+    .comps-section ul {
+        padding-left: 0 !important;
+    }
+
+    .comps-section {
+        font-family: 'IBM Plex Sans', Arial, sans-serif;
+        font-size: 16px;
+        max-width: 1200px;
+        padding: 0 20px;
+        margin: 0 auto;
+    }
+
+    .main-heading {
+        font-size: 2rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .comps-section ul {
+        list-style: none;
+        padding-inline-start: 0;
+    }
+
+    .engines-list {
+        margin-bottom: 1rem;
+    }
+
+    .engines-item {
+        margin-top: 2.5rem;
+    }
+
+    .engines-heading {
+        margin: 0;
+        font-size: 1.25rem;
+    }
+
+    .comps-list {
+        margin-top: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .comps-item {
+        border-top: 1px solid #eee;
+    }
+
+    .comps-main-line {
+        display: grid;
+        align-items: center;
+        padding: 1rem 0.5rem;
+        gap: 1rem;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr auto;
+        transition: background-color 200ms ease-out, border 200ms ease-out;
+        cursor: pointer;
+    }
+
+    .comps-main-line:hover {
+        background-color: #f7f7f7;
+    }
+
+    .comps-item:last-child {
+        border-bottom: 1px solid #eee;
+    }
+
+    .comps-name {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem;
+        width: max-content;
+        transition: background-color 200ms ease-out, border 200ms ease-out;
+        cursor: pointer;
+    }
+
+    /*.comps-name:hover {*/
+    /*    border: 1px solid #d9d9d9;*/
+    /*    background-color: #fafafa;*/
+    /*}*/
+
+    /*.comps-item .comps-name::after {*/
+    /*    content: '?';*/
+    /*    display: grid;*/
+    /*    place-items: center;*/
+    /*    width: 1rem;*/
+    /*    height: 1rem;*/
+    /*    font-size: 0.75rem;*/
+    /*    color: #888;*/
+    /*    border: 1px solid #d9d9d9;*/
+    /*    border-radius: 100px;*/
+    /*    background-color: #fafafa;*/
+    /*    opacity: 0;*/
+    /*    transition: opacity 200ms ease-out;*/
+    /*}*/
+
+    /*.comps-item:hover .comps-name::after,*/
+    /*.comps-item:hover .comps-price-new::after {*/
+    /*    opacity: 1;*/
+    /*}*/
+
+    .comps-price-new {
+        font-weight: 600;
+    }
+
+    .comps-price-old {
+        color: #aaa;
+        text-decoration: line-through;
+        font-weight: 300;
+    }
+
+    .comps-price-month {
+        color: #00a651;
+    }
+
+    .comps-button {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #000;
+        text-transform: uppercase;
+        text-decoration: none;
+        text-align: center;
+        background-color: #fff;
+        border: 1px solid #ff4433;
+        border-radius: 0.25rem;
+        padding: 0.75rem 1.5rem;
+        cursor: pointer;
+        user-select: none;
+        transition: background-color 200ms ease-out, color 200ms ease-out;
+    }
+
+    .comps-button:hover {
+        background-color: #ff4433;
+        color: #fff !important;
+    }
+
+    .comps-comp-info {
+        display: grid;
+        grid-template-rows: 0fr;
+        padding: 0 0.5rem;
+        font-size: 14px;
+        transition: grid-template-rows 400ms ease-out, margin 400ms ease-out;
+    }
+
+    .comp-info-container {
+        overflow: hidden;
+        column-count: 2;
+        column-gap: 64px;
+    }
+
+    .comps-comp-info.show {
+        grid-template-rows: 1fr;
+        margin: 1.5rem 0;
+    }
+
+    .comp-info-list > li:not(:first-child) {
+        margin-top: 0.5rem;
+    }
+
+    .comp-info-list > li:not(:first-child)::before {
+        content: '•';
+        margin-right: 0.5rem;
+    }
+
+    .comp-info-list:not(:first-child) {
+        margin-top: 1.5rem;
+    }
+
+    .comp-info-heading {
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    .comp-stat-item {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 8px;
+    }
+
+    .comp-stat-name {
+        opacity: 0.5;
+    }
+
+    @media screen and (max-width: 960px) {
+        .comps-main-line {
+            grid-template-columns: unset;
+        }
+
+        .comps-button {
+            grid-row: 1;
+            grid-column: 3;
+        }
+
+        .comps-price-old {
+            grid-row: 2;
+        }
+
+        .comps-price-new {
+            grid-row: 2;
+        }
+
+        .comps-price-month {
+            grid-row: 2;
+        }
+    }
+
+    @media screen and (max-width: 640px) {
+        .comps-button {
+            grid-row: 5;
+            grid-column: unset;
+        }
+
+        .comps-price-old {
+            grid-row: 2;
+        }
+
+        .comps-price-new {
+            grid-row: 3;
+        }
+
+        .comps-price-month {
+            grid-row: 4;
+        }
+
+        .comp-info-container {
+            column-count: 1;
+        }
+    }
+</style>
+<section class="comps-section">
+    <h1 class="main-heading">Комплектации</h1>
+    <ul class="engines-list"></ul>
+</section>
+<script>
+    const enginesList = document.querySelector('.engines-list');
+    const COMPS = JSON.parse($('.js-store-prod-all-text').text());
+
+    const elem = (tag, className, text) => {
+        const element = document.createElement(tag);
+        element.classList.add(className);
+        if (text) element.textContent = text;
+        return element;
+    };
+
+    const elemWithHref = (href) => {
+        return (...args) => {
+            const el = elem(...args);
+            el.setAttribute('href', href);
+            return el;
+        };
+    };
+
+    const elemWithHtml = (html) => {
+        return (...args) => {
+            const el = elem(...args);
+            el.innerHTML = html;
+            return el;
+        };
+    };
+
+    COMPS.forEach((engine) => {
+        const enginesItem = elem('li', 'engines-item');
+        const enginesHeading = elem('h2', 'engines-heading', engine.engine);
+        const compsList = elem('ul', 'comps-list');
+
+        const intl = new Intl.NumberFormat('ru-RU');
+        engine.complectations.forEach((comp) => {
+            const compsItem = elem('li', 'comps-item');
+
+            //main line
+            const compsMainLine = elem('div', 'comps-main-line');
+            const compsName = elem('span', 'comps-name', comp.name);
+            const compsPriceOld = elem('span', 'comps-price-old', `от ${intl.format(comp.priceOld)} руб.`);
+            const compsPriceNew = elem('span', 'comps-price-new', `от ${intl.format(comp.price)} руб.`);
+            const compsPriceMonth = elem('span', 'comps-price-month', `от ${intl.format(comp.monthlyPayment)} руб./мес`);
+            const compsButton = elemWithHref('#popup:callback')('a', 'comps-button', 'Узнать подробнее');
+
+            //comp info
+            const compsCompInfo = elem('div', 'comps-comp-info');
+            const compInfoContainer = elem('div', 'comp-info-container');
+
+            comp.details.forEach((item) => {
+                const compInfoList = elem('ul', 'comp-info-list');
+                const compInfoHeading = elem('li', 'comp-info-heading', item.title);
+                const compStatList = elem('ul', 'comp-stat-list');
+
+                compInfoContainer.append(compInfoList);
+                compInfoList.append(compInfoHeading, compStatList);
+
+                item.stats.forEach((stat) => {
+                    const compStatItem = elem('li', 'comp-stat-item');
+                    const compStatName = elem('span', 'comp-stat-name', stat.name);
+                    const compStatValue = elem('span', 'comp-stat-value', stat.value);
+
+                    compStatItem.append(compStatName, compStatValue);
+                    compStatList.append(compStatItem);
+                });
+            });
+
+            compsMainLine.addEventListener('click', (e) => {
+                if (e.target == compsButton) return;
+                if (compsCompInfo.classList.contains('show')) {
+                    compsCompInfo.classList.remove('show');
+                } else {
+                    compsCompInfo.classList.add('show');
+                }
+            });
+
+            compsCompInfo.append(compInfoContainer);
+            compsMainLine.append(compsName, compsPriceOld, compsPriceNew, compsPriceMonth, compsButton);
+            compsItem.append(compsMainLine, compsCompInfo);
+            compsList.append(compsItem);
+        });
+
+        enginesItem.append(enginesHeading);
+        enginesItem.append(compsList);
+        enginesList.append(enginesItem);
+    });
+</script>

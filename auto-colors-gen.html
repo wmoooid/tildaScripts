@@ -1,3 +1,5 @@
+<!--Выбор цветов-->
+
 <style>
     .t-slds__thumbsbullet-wrapper {
         padding: 0 !important;
@@ -19,38 +21,40 @@
 </style>
 <script>
     $(window).load(() => {
-        $('.t-store__prod-popup__price-wrapper').after($('.t-slds__thumbsbullet-wrapper')).css('margin-bottom', '24px');
+        setTimeout(() => {
+            $('.t-store__prod-popup__price-wrapper').after($('.t-slds__thumbsbullet-wrapper')).css('margin-bottom', '24px');
 
-        $('.t-slds__thumbsbullet .t-slds__bgimg').each((i, el) => {
-            const src = el.dataset.original;
+            $('.t-slds__thumbsbullet .t-slds__bgimg').each((i, el) => {
+                const src = el.dataset.original;
 
-            const canvas = document.createElement('canvas');
+                const canvas = document.createElement('canvas');
 
-            const pic = new Image();
-            pic.crossOrigin = 'Anonymous';
-            pic.src = src;
-            pic.onload = function () {
-                canvas.width = pic.width;
-                canvas.height = pic.height;
-                const ctx = canvas.getContext('2d');
+                const pic = new Image();
+                pic.crossOrigin = 'Anonymous';
+                pic.src = src;
+                pic.onload = function () {
+                    canvas.width = pic.width;
+                    canvas.height = pic.height;
+                    const ctx = canvas.getContext('2d');
 
-                ctx.drawImage(pic, 0, 0);
+                    ctx.drawImage(pic, 0, 0);
 
-                const c = canvas.getContext('2d');
-                const p = c.getImageData(pic.width * 0.32, pic.height * 0.4, 30, 1).data;
-                const rgb = { r: [], g: [], b: [] };
+                    const c = canvas.getContext('2d');
+                    const p = c.getImageData(pic.width * 0.32, pic.height * 0.4, 30, 1).data;
+                    const rgb = { r: [], g: [], b: [] };
 
-                for (let i = 0; i < p.length; i++) {
-                    if ((i + 4) % 4 === 0) rgb.r.push(p[i]);
-                    if ((i + 4) % 4 === 1) rgb.g.push(p[i]);
-                    if ((i + 4) % 4 === 2) rgb.b.push(p[i]);
-                }
+                    for (let i = 0; i < p.length; i++) {
+                        if ((i + 4) % 4 === 0) rgb.r.push(p[i]);
+                        if ((i + 4) % 4 === 1) rgb.g.push(p[i]);
+                        if ((i + 4) % 4 === 2) rgb.b.push(p[i]);
+                    }
 
-                const average = (arr) => arr.reduce((acc, v, i, a) => acc + v / a.length, 0);
-                const hex = 'rgb(' + average(rgb.r) + ', ' + average(rgb.g) + ', ' + average(rgb.b) + ')';
+                    const average = (arr) => arr.reduce((acc, v, i, a) => acc + v / a.length, 0);
+                    const hex = 'rgb(' + average(rgb.r) + ', ' + average(rgb.g) + ', ' + average(rgb.b) + ')';
 
-                el.style.backgroundColor = hex;
-            };
-        });
+                    el.style.backgroundColor = hex;
+                };
+            });
+        }, 1000);
     });
 </script>

@@ -1,32 +1,56 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        <title>Get Pixel</title>
+<!--Скрипт для карточек авто-->
+<script>
+    $(window).load(() => {
+        setTimeout(() => {
+            // Добавление кнопок
 
-        <script type="text/javascript">
-            window.onload = function () {
-                var canvas = document.createElement('canvas');
+            const getMonthlyPayment = (carPrice) => {
+                const rate = 4.9;
+                const years = 7;
+                const firstPayment = 0.3;
+                const monthRate = rate / 12 / 100;
+                const paymentsCount = years * 12;
+                const creditAmount = carPrice * (1 - firstPayment);
 
-                var pic = new Image();
-                pic.src = '1.jpg';
-                pic.onload = function () {
-                    canvas.width = pic.width;
-                    canvas.height = pic.height;
-                    var ctx = canvas.getContext('2d');
+                const coeff = (monthRate * Math.pow(1 + monthRate, paymentsCount)) / (Math.pow(1 + monthRate, paymentsCount) - 1);
+                const monthlyPayment = creditAmount * coeff;
 
-                    ctx.drawImage(pic, 0, 0);
-
-                    var c = canvas.getContext('2d');
-                    var p = c.getImageData(7, 7, 1, 1).data;
-                    var hex = 'rgb(' + p[0] + ', ' + p[1] + ', ' + p[2] + ')';
-
-                    document.getElementById('output').innerHTML = hex;
-                };
+                return Math.round(monthlyPayment);
             };
-        </script>
-    </head>
-    <body>
-        <div id="output"></div>
-    </body>
-</html>
+
+            function assignLinksToCard(el) {
+                const container = $(el).find('.t-container');
+                const productUrl = container.data('product-url');
+                const buttonWrapper = container.find('.t744__btn-wrapper');
+
+                if (container.data('product-url')) {
+                    container.wrap(`<a href="${productUrl}"></a>`);
+                    buttonWrapper.prepend(`<a class="button-accent" href="${productUrl}">Узнать подробнее</a>`);
+                    container.find('.t744__col_first').click((e) => e.preventDefault());
+                } else {
+                    setTimeout(() => assignLinksToCard(el), 200);
+                }
+            }
+
+            $('.t744').each((i, el) => {
+                assignLinksToCard(el);
+                const carPrice = $(el).find('.t744__price-value').data('productPriceDef');
+                $(el)
+                    .find('.t744__btn td')
+                    .text(`В кредит от ${getMonthlyPayment(carPrice)} ₽/мес.`);
+            });
+
+            // Иконки буллитов
+            $('.t744 .js-product-option').each((i, el) => {
+                el.style.setProperty('--bg-image', `url(${$(el).find('option').text()})`);
+            });
+
+            // Скрытие лишних фото в карусели
+            // $('.t744').each((i, el) => {
+            //     let colorsInModel = $(el).find('.t-product__option-item_color').length;
+            //     if (colorsInModel < 4) colorsInModel = 4;
+            //     $(el).find(`.t-slds__thumbsbullet:nth-child(-n+${colorsInModel})`).hide();
+            // });
+        }, 200);
+    });
+</script>
