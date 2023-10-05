@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            const obj = {};
+
+            const start = performance.now();
+
+            const monitor = setInterval(() => {
+                console.log('interval');
+            }, 1);
+
+            // for (let i = 0; i < 10000; i++) {
+            //     obj[Math.floor(Math.random() * 100000000).toString(16)] = Math.floor(Math.random() * 100000000).toString(16);
+            // }
+
+            Array(1000).forEach(() => {
+                obj[Math.floor(Math.random() * 100000000).toString(16)] = Math.floor(Math.random() * 100000000).toString(16);
+            });
+
+            const end = performance.now();
+
+            clearInterval(monitor);
+
+            console.log(obj);
+
+            console.log(end - start + 'ms');
+        </script>
+    </body>
+</html>
