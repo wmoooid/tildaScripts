@@ -1,56 +1,377 @@
-<!--Скрипт для карточек авто-->
+<!--Фиксы для страницы авто-->
+
 <script>
     $(window).load(() => {
-        setTimeout(() => {
-            // Добавление кнопок
+        // Добавление кнопок
+        $('.t-store__prod-popup__info').append(
+            `<div class="popup-buttons-wrapper">
+              <a class="button-accent" href="#popup:reserve">Забронировать ${$('.js-product-brand').text()} ${$('.js-product-name').text()}</a>
+              <a class="button-second" href="#popup:credit">Рассчитать кредит</a>
+              <a class="button-second" href="#popup:testdrive">Записаться на тест-драйв</a>
+          </div>`,
+        );
 
-            const getMonthlyPayment = (carPrice) => {
-                const rate = 4.9;
-                const years = 7;
-                const firstPayment = 0.3;
-                const monthRate = rate / 12 / 100;
-                const paymentsCount = years * 12;
-                const creditAmount = carPrice * (1 - firstPayment);
+        //Подмена модели в поп-апе и ФОС
+        const productName = $('.js-product-brand').text() + ' ' + $('.js-product-name').text();
 
-                const coeff = (monthRate * Math.pow(1 + monthRate, paymentsCount)) / (Math.pow(1 + monthRate, paymentsCount) - 1);
-                const monthlyPayment = creditAmount * coeff;
-
-                return Math.round(monthlyPayment);
-            };
-
-            function assignLinksToCard(el) {
-                const container = $(el).find('.t-container');
-                const productUrl = container.data('product-url');
-                const buttonWrapper = container.find('.t744__btn-wrapper');
-
-                if (container.data('product-url')) {
-                    container.wrap(`<a href="${productUrl}"></a>`);
-                    buttonWrapper.prepend(`<a class="button-accent" href="${productUrl}">Узнать подробнее</a>`);
-                    container.find('.t744__col_first').click((e) => e.preventDefault());
-                } else {
-                    setTimeout(() => assignLinksToCard(el), 200);
-                }
+        function setProductPopupImage() {
+            const productImage = $('.t-slds__item_active .t-slds__bgimg').data('original');
+            if (productImage) {
+                $('#rec644825763 .t1014__img').attr('src', productImage);
+            } else {
+                setTimeout(setProductPopupImage, 200);
             }
+        }
 
-            $('.t744').each((i, el) => {
-                assignLinksToCard(el);
-                const carPrice = $(el).find('.t744__price-value').data('productPriceDef');
-                $(el)
-                    .find('.t744__btn td')
-                    .text(`В кредит от ${getMonthlyPayment(carPrice)} ₽/мес.`);
-            });
-
-            // Иконки буллитов
-            $('.t744 .js-product-option').each((i, el) => {
-                el.style.setProperty('--bg-image', `url(${$(el).find('option').text()})`);
-            });
-
-            // Скрытие лишних фото в карусели
-            // $('.t744').each((i, el) => {
-            //     let colorsInModel = $(el).find('.t-product__option-item_color').length;
-            //     if (colorsInModel < 4) colorsInModel = 4;
-            //     $(el).find(`.t-slds__thumbsbullet:nth-child(-n+${colorsInModel})`).hide();
-            // });
-        }, 200);
+        if (productName) {
+            $('[data-tooltip-hook="#popup:reserve"] .t1014__title').html(`Забронируйте </br> ${productName}`);
+            $('.fos-heading .tn-atom').text(`Почему стоит купить ${productName} в автосалоне`);
+        }
+        setProductPopupImage();
     });
 </script>
+
+<style>
+    .t-container > div {
+        display: grid;
+        grid-template-columns: 7fr 5fr;
+        gap: 40px;
+        padding: 0 20px;
+    }
+
+    .t-container > div::after {
+        content: unset !important;
+    }
+
+    .t-store__prod-popup__title-wrapper {
+        display: flex;
+        gap: 8px;
+        align-items: baseline;
+        margin-bottom: 12px;
+    }
+
+    .js-store-prod-name,
+    .t-store__prod-popup__brand {
+        margin: 0 !important;
+        color: #000;
+        font-size: 32px;
+        font-weight: 600;
+        letter-spacing: -0.64px;
+    }
+
+    .t-store__prod-popup__info {
+        margin: 0 !important;
+    }
+
+    .t-store__prod-popup__brand {
+        order: -1;
+    }
+
+    .t-store__prod-popup__sku {
+        display: none;
+    }
+
+    .t-store__prod-popup__text {
+        display: none;
+    }
+
+    .t-store__prod-popup__price-wrapper {
+        text-align: left !important;
+        padding-bottom: var(--modelcard-row-gap);
+        border-bottom: 1px solid #e6e6e6;
+    }
+
+    .t-store__prod-popup__price {
+        display: inline-flex;
+        width: max-content;
+        padding: 6px 8px;
+
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1;
+        color: #fff;
+
+        border-radius: 4px;
+        background: #4da621;
+    }
+
+    .t-store__prod-popup__price::before {
+        content: 'от ';
+        margin-right: 8px;
+    }
+
+    .t-store__prod-popup__price_old {
+        margin-left: 20px;
+
+        font-size: 16px;
+        font-weight: 300 !important;
+        line-height: 1;
+    }
+
+    .t-product__option-variants_regular {
+        display: none !important;
+    }
+
+    .js-product-option {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 8px;
+        --bg-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.4417 2.92495L12.9084 5.85828C13.1084 6.26662 13.6417 6.65828 14.0917 6.73328L16.75 7.17495C18.45 7.45828 18.85 8.69162 17.625 9.90828L15.5584 11.975C15.2084 12.325 15.0167 13 15.125 13.4833L15.7167 16.0416C16.1834 18.0666 15.1084 18.85 13.3167 17.7916L10.825 16.3166C10.375 16.05 9.63338 16.05 9.17505 16.3166L6.68338 17.7916C4.90005 18.85 3.81671 18.0583 4.28338 16.0416L4.87505 13.4833C4.98338 13 4.79171 12.325 4.44171 11.975L2.37505 9.90828C1.15838 8.69162 1.55005 7.45828 3.25005 7.17495L5.90838 6.73328C6.35005 6.65828 6.88338 6.26662 7.08338 5.85828L8.55005 2.92495C9.35005 1.33328 10.65 1.33328 11.4417 2.92495Z' stroke='%23D6141E' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+    }
+
+    .js-product-option:nth-child(2),
+    .js-product-option:nth-child(3) {
+        margin-top: 24px;
+    }
+
+    .js-product-option::before {
+        content: '';
+        display: block;
+        width: 20px;
+        height: 20px;
+        background-position: center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-image: var(--bg-image);
+    }
+
+    .js-product-controls-wrapper {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        margin-top: var(--modelcard-row-gap);
+    }
+
+    .js-product-edition-option {
+        grid-column: 1 / 3;
+        margin: 0 !important;
+        padding-bottom: var(--modelcard-row-gap);
+        border-bottom: 1px solid #e6e6e6;
+    }
+
+    .t-product__option-variants {
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        gap: 4px;
+        margin: 12px 0 0 0 !important;
+    }
+
+    .t-product__option-item {
+        max-width: 48px;
+        padding: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+    .t-product__option-checkmark_color {
+        margin: 0 !important;
+        width: 100% !important;
+        height: 32px !important;
+        border-radius: 8px !important;
+        border: 2px solid #fff !important;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.08), 0px 0px 6px 0px rgba(0, 0, 0, 0.02);
+        transition: box-shadow 200ms ease-out;
+    }
+
+    .t-product__option-item_active .t-product__option-checkmark_color {
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.08), 0px 0px 4px 0px rgba(0, 0, 0, 0.04);
+    }
+
+    .t-product__option-checkmark_color::before,
+    .t-product__option-checkmark_color::after {
+        content: unset !important;
+    }
+
+    .t-product__option-title_radio {
+        display: none !important;
+    }
+
+    .t-product__option-title {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1;
+        padding: 0 !important;
+    }
+
+    .t-store__prod-popup__slider {
+        border-radius: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        margin: 0 !important;
+        box-sizing: border-box;
+        padding: 48px;
+        max-width: 660px;
+        min-height: 500px;
+    }
+
+    .t-slds {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .t-slds__main {
+        flex: 1 1 100%;
+    }
+
+    .t-slds__main .t-slds__items-wrapper *,
+    .t-slds__items-wrapper,
+    .t-slds__container {
+        height: 100% !important;
+        box-sizing: border-box;
+        padding: 0 !important;
+    }
+
+    .t-slds__container {
+        border-radius: 24px;
+        background-color: #fff !important;
+    }
+
+    .t-slds__bgimg {
+    }
+
+    .t-slds__thumbsbullet-wrapper {
+        display: flex;
+        height: 64px;
+    }
+
+    .t-slds__thumbsbullet,
+    .t-slds__thumbsbullet-border {
+        box-sizing: border-box;
+        overflow: hidden;
+        width: 100% !important;
+        max-height: 64px;
+        border-radius: 8px;
+    }
+
+    .t-slds__thumbsbullet .t-slds__bgimg {
+        height: 64px;
+        box-sizing: border-box;
+        padding-bottom: 0 !important;
+    }
+
+    .t-slds__arrow {
+        background-color: #f4f4f4 !important;
+    }
+
+    .t-slds__arrow-right {
+        right: 0 !important;
+    }
+
+    .t-slds__arrow-left {
+        left: 0 !important;
+    }
+
+    /*.t-slds__arrow_container {*/
+    /*    display: none;*/
+    /*}*/
+
+    .t-slds__thumbsbullet:nth-child(n + 5) {
+        display: none;
+    }
+
+    .t-slds__imgwrapper .t-slds__bgimg {
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    .popup-buttons-wrapper {
+        margin-top: var(--modelcard-row-gap);
+        display: grid;
+        gap: 8px;
+    }
+
+    .popup-buttons-wrapper .button-accent {
+        grid-row: 1;
+        grid-column: 1 / 3;
+    }
+
+    .popup-buttons-wrapper .button-second {
+        grid-row: 2;
+    }
+
+    @media (max-width: 1200px) {
+        .t-store__prod-popup__slider {
+            max-width: 512px;
+        }
+
+        .js-product-controls-wrapper {
+            column-gap: 16px;
+        }
+
+        .js-product-option-name {
+            text-align: left;
+        }
+
+        .js-product-option {
+            align-items: flex-start !important;
+        }
+
+        .popup-buttons-wrapper .button-accent {
+            grid-row: unset;
+            grid-column: unset;
+        }
+
+        .popup-buttons-wrapper .button-second {
+            grid-row: unset;
+            grid-column: unset;
+        }
+    }
+
+    @media (max-width: 960px) {
+        .t-container > div {
+            grid-template-columns: unset;
+            gap: 32px;
+        }
+
+        .t-store__prod-popup__slider {
+            max-width: 620px;
+            height: 480px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .t-store__prod-popup__slider {
+            max-width: 460px;
+            height: 400px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .t-store__prod-popup__slider {
+            max-width: calc(100vw - 32px);
+            padding: 0 16px;
+        }
+
+        .t-store__prod-popup__info {
+            padding: 0 !important;
+        }
+
+        .js-product-option {
+            grid-column: 1 / 3;
+        }
+
+        .t-slds__thumbsbullet-wrapper {
+            padding-bottom: 20px;
+        }
+
+        .js-product-option:nth-child(3) {
+            margin-top: 12px;
+        }
+
+        .t-store__prod-popup__slider {
+            min-height: 300px;
+            height: 320px;
+        }
+
+        .t-store__prod-snippet__container {
+            padding-top: 12px !important;
+        }
+
+        .t-container > div {
+            gap: 16px;
+        }
+
+        .t-slds__arrow_container {
+            display: none;
+        }
+    }
+</style>
